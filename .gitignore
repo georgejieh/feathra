@@ -170,3 +170,8 @@ app.*.map.json
 !ios/Runner/default.mode1v3
 !ios/Runner/default.mode2v3
 !ios/Runner/default.perspectivev3
+
+# ────────── Data Privacy ──────────
+# Data folders (raw and processed)
+data_pipeline/raw_data/
+data_pipeline/processed/
