@@ -1,0 +1,30 @@
+Feathra - Bird Song Identification App  
+Copyright 2025 George Jieh
+
+This product includes components licensed under the Apache License 2.0, BSD 3-Clause, and Creative Commons licenses.
+
+---
+
+Third-Party Attributions:
+
+1. Xeno-canto Recordings  
+   License: Various Creative Commons licenses (e.g., CC-BY, CC-BY-NC)  
+   Source: https://www.xeno-canto.org/  
+   Note: Used for training and evaluation only. Individual recording licenses reviewed prior to use.
+
+2. BirdCLEF 2024 Dataset  
+   License: Competition Terms of Use  
+   Source: https://www.kaggle.com/competitions/birdclef-2024  
+   Note: Used strictly for model training and validation.
+
+3. TweetyNet  
+   License: BSD 3-Clause License  
+   Repository: https://github.com/yardencsGitHub/tweetynet
+
+4. MobileNetV3 Architecture  
+   License: Apache License 2.0  
+   Reference: https://github.com/xiaochus/MobileNetV3
+
+---
+
+All trademarks and copyrights are the property of their respective owners.
