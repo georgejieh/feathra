@@ -58,13 +58,6 @@ feathra/
 
 ---
 
-
-# 🐦 Feathra
-
-[...existing overview section...]
-
----
-
 ## 🧭 Project Plan
 
 Feathra is being built in 7 clear phases:
