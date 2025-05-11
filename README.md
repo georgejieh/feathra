@@ -30,14 +30,30 @@ Built with Flutter and optimized for on-device inference, Feathra works seamless
 
 ```plaintext
 feathra/
-├── LICENSE
-├── NOTICE
 ├── README.md
-├── data_pipeline/        # Scripts + notebooks for data collection & preprocessing
-├── model_dev/            # Model training, evaluation, conversion scripts
-├── mobile_app/           # Flutter codebase for cross-platform mobile app
-├── scripts/              # Utility/dev scripts
-└── tests/                # Unit and integration tests
+├── .gitignore
+├── LICENSE
+├── .github/
+│   └── workflows/           # CI/CD (GitHub Actions later)
+├── docs/                    # Documentation, diagrams, usage, etc.
+├── data_pipeline/           # Phase 1: Data Collection & Preprocessing
+│   ├── scripts/             # Python scripts for downloading and cleaning data
+│   ├── raw_data/            # Unprocessed downloads
+│   ├── processed/           # Spectrograms & transformed data
+│   └── notebooks/           # Jupyter/Colab notebooks
+├── model_dev/               # Phase 2: Model Training and Export
+│   ├── training/            # Model training scripts
+│   ├── models/              # Saved models (.h5, .pt, .tflite, .mlmodel)
+│   ├── utils/               # Helper functions
+│   └── experiments/         # Logs, metrics, test runs
+├── mobile_app/              # Phase 3+: Flutter App Codebase
+│   ├── android/             # Native Android configs
+│   ├── ios/                 # Native iOS configs
+│   ├── lib/                 # Dart source files
+│   ├── assets/              # Images, icons, model files
+│   └── pubspec.yaml         # Flutter package config
+├── scripts/                 # Dev scripts: setup, lint, tests
+└── tests/                   # Unit and integration tests
 ````
 
 ---
