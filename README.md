@@ -1,199 +1,171 @@
 # 🐦 Feathra
 
-Feathra is a sleek, mobile-first bird song identification app designed for nature enthusiasts, citizen scientists, and casual birders alike. It uses machine learning to analyze short audio snippets and identify bird species in real time — even in noisy environments.
+Feathra is a mobile-first bird identification app that uses machine learning to recognize birds by their sounds—and eventually, their appearance. Initially focused on fast, on-device bird call recognition, Feathra also supports rich sighting logs, filtering tools, and field guide browsing.
 
-Built with Flutter and optimized for on-device inference, Feathra works seamlessly across both Android and iOS, preserving user privacy while enabling powerful offline bird recognition features.
+Built with Flutter and designed to run smoothly on both Android and iOS, Feathra emphasizes practical, local-first functionality in its early stages. Core features work without accounts or network access, while ads and optional upgrades help sustain long-term development and enable future server-supported capabilities.
 
 ---
 
 ## 📲 Key Features
 
-- Record 3–5 second audio clips to identify bird species by sound
-- Lightweight deep learning model trained on real-world bird calls
-- Top prediction results with confidence scores
-- Journaling with location, photos, and user notes
-- Fully functional offline support with local model
-- Approximate location filtering to improve prediction accuracy
+- 🎙️ **Birdsong ID**: Record a 3–5 second clip to identify birds by their calls
+- 📒 **Flexible Journaling**: Save detailed sightings with notes, behavior, weather, and photos
+- 🌍 **Field Guide**: Browse bird details with images, regional context, and spectrograms
+- 📊 **Local Analytics**: Track species counts, seasonal patterns, and trip history
+- 🧭 **Advanced Filters**: Search by color, size, location, time of year, or tags
+- 🔗 **Shareable Logs**: Export logs as CSV or `.fthlog` files for backup or cross-device sharing
+- 💵 **Non-intrusive Monetization**: Includes banner ads and optional upgrades (e.g. remove ads, expand species content)
+
+---
+
+## 🧠 Why Feathra?
+
+Feathra is designed for nature lovers who want a reliable bird ID tool without unnecessary barriers. Whether you're identifying birds by sound in remote areas or building a custom sighting log over time, Feathra offers flexibility and speed. Its architecture also allows for future enhancements—like image-based identification or cloud syncing—once user needs justify expansion.
+
+---
+
+## 🚀 Feature Comparison
+
+| Feature                | Merlin | eBird | iBird/Sibley | Feathra |
+|------------------------|--------|-------|--------------|---------|
+| ML Sound ID            | ✓      | ✗     | ✗            | ✓       |
+| Works Without Login    | ✗      | ✗     | ✓            | ✓       |
+| Customizable Logging   | ✗      | ✓     | ✗            | ✓       |
+| Local Analytics        | ✗      | ✗     | ✗            | ✓       |
+| Export/Share Logs      | ✗      | ✓     | ✗            | ✓       |
+| Optional Monetization  | ✗      | ✗     | Paid app     | Ads + Upgrades |
 
 ---
 
 ## 🧠 Machine Learning Stack
 
-- Model Architecture: MobileNetV3 + 2D CNN + LSTM + Softmax
-- Frameworks: TensorFlow (with TFLite), Core ML (for iOS), PyTorch (optionally)
-- Training Data: Xeno-canto, BirdCLEF 2024, TweetyNet
-- Preprocessing: 128-band mel spectrograms (32kHz mono WAV input)
+- **Architecture**: MobileNetV3 + 2D CNN + LSTM with softmax output
+- **Input**: 128-band mel spectrograms from 32kHz mono WAVs
+- **Frameworks**: TensorFlow or PyTorch for training, TFLite/Core ML for deployment
+- **Optimization**: Pruned + quantized to <10MB for mobile use
+- **Training Data**: Xeno-canto, BirdCLEF 2024, TweetyNet (for validation)
 
 ---
 
-## 📁 Repository Structure
+## 🗂️ Repository Structure
 
 ```plaintext
 feathra/
 ├── README.md
-├── .gitignore
 ├── LICENSE
-├── .github/
-│   └── workflows/           # CI/CD (GitHub Actions later)
-├── docs/                    # Documentation, diagrams, usage, etc.
-├── data_pipeline/           # Phase 1: Data Collection & Preprocessing
-│   ├── scripts/             # Python scripts for downloading and cleaning data
-│   ├── raw_data/            # Unprocessed downloads
-│   ├── processed/           # Spectrograms & transformed data
-│   └── notebooks/           # Jupyter/Colab notebooks
-├── model_dev/               # Phase 2: Model Training and Export
-│   ├── training/            # Model training scripts
-│   ├── models/              # Saved models (.h5, .pt, .tflite, .mlmodel)
-│   ├── utils/               # Helper functions
-│   └── experiments/         # Logs, metrics, test runs
-├── mobile_app/              # Phase 3+: Flutter App Codebase
-│   ├── android/             # Native Android configs
-│   ├── ios/                 # Native iOS configs
-│   ├── lib/                 # Dart source files
-│   ├── assets/              # Images, icons, model files
-│   └── pubspec.yaml         # Flutter package config
-├── scripts/                 # Dev scripts: setup, lint, tests
-└── tests/                   # Unit and integration tests
+├── NOTICE
+├── .gitignore
+├── .github/              # CI/CD configs
+├── docs/                 # Planning and architecture
+├── data_pipeline/        # Phase 1: Dataset preparation
+│   ├── scripts/
+│   ├── raw_data/         # [ignored]
+│   ├── processed/        # [ignored]
+│   └── notebooks/
+├── model_dev/            # Phase 2: ML model training
+│   ├── training/
+│   ├── models/
+│   ├── utils/
+│   └── experiments/
+├── mobile_app/           # Flutter codebase
+│   ├── android/
+│   ├── ios/
+│   ├── lib/
+│   ├── assets/
+│   └── pubspec.yaml
+├── scripts/              # CLI, test, dev tools
+└── tests/                # App and ML test cases
 ````
 
 ---
 
 ## 🧭 Project Plan
 
-Feathra is being built in 7 clear phases:
+Feathra is being developed in focused stages to remain practical, testable, and extensible.
 
 ### ✅ Phase 1: Data Collection & Preprocessing
 
-* **Sources:**
-
-  * Xeno-canto (CC-licensed global bird recordings)
-  * BirdCLEF 2024 (annotated datasets)
-  * TweetyNet (canary songs for validation)
-
-* **Preprocessing Steps:**
-
-  * Convert all audio to 32kHz mono WAV
-  * Generate 128-band mel spectrograms (0.5–10kHz)
-  * Apply time stretching and pitch shifting
-  * Organize training into three stages:
-
-    1. Clean calls (single bird)
-    2. Overlapping calls (multi-species)
-    3. Noisy environments (background traffic, wind)
+* Collect and clean data from Xeno-canto, BirdCLEF, TweetyNet
+* Convert audio to 32kHz mono WAVs
+* Generate 128-band mel spectrograms
+* Apply augmentation (pitch/time)
+* Create clean/overlapping/noisy data tiers
 
 ### ✅ Phase 2: Model Development
 
-* **Architecture:**
-
-  * MobileNetV3 + 2D CNN + LSTM (lightweight, temporal-aware)
-  * Softmax output with species probability distribution
-
-* **Optimization:**
-
-  * Quantization to FP16 or INT8
-  * Pruning to reduce model size <10MB
-  * On-device inference via TFLite (Android), Core ML (iOS)
-
-* **Accuracy Enhancements:**
-
-  * Temporal attention pooling
-  * Location-aware filtering using static migration tables (e.g., eBird)
-
-* **Tools:**
-
-  * Python + TensorFlow or PyTorch
-  * Model conversion: `tf.lite.TFLiteConverter` and `coremltools`
+* Build MobileNetV3 + LSTM model
+* Quantize and prune for TFLite/Core ML export
+* Validate with diverse bird call samples
 
 ### ✅ Phase 3: App Framework & Integration
 
-* **Framework: Flutter (preferred for ML support + ease of UI)**
-
-  * Android: TFLite integration
-  * iOS: Core ML integration
-
-* **IDE Stack:**
-
-  * Visual Studio Code (main)
-  * Android Studio (build/deploy Android)
-  * Xcode (build/deploy iOS)
+* Build core UI in Flutter
+* Integrate on-device model
+* Implement audio capture and inference
 
 ### ✅ Phase 4: App Features
 
-* **Core MVP:**
+* Develop SQLite-based sighting journal
+* Add field guide and advanced search
+* Implement `.fthlog` and CSV export options
+* Add non-intrusive ads and upgrade paths
 
-  * 3–5s audio recording
-  * Spectrogram processing + model inference
-  * Display top 3–5 predictions + confidence scores
+### ✅ Phase 5: Platform Policies & UX
 
-* **Secondary Features:**
+* Add app store privacy disclosures
+* Ensure clear prompts for any location use
+* Keep data local unless user explicitly shares
 
-  * Journaling (SQLite): add photos, timestamps, notes
-  * Location-based filtering (approx. 100 km² grid, on-device only)
-  * Offline support (model and data preloaded)
-  * Bird cards (basic info, images, calls)
+### ✅ Phase 6: Testing & Launch Prep
 
-### ✅ Phase 5: Privacy & Compliance
+* Run automated + field-based testing
+* Build out platform assets (icons, screenshots, descriptions)
+* Prepare Play Store and App Store submissions
 
-* **Location Data:**
+### ✅ Phase 7: Maintenance & Future Expansion
 
-  * Opt-in prompt with justification
-  * On-device processing, no GPS stored/transmitted
-  * Approximate location only (coarse grids)
-
-* **Policy:**
-
-  * GDPR/CCPA-compliant privacy policy
-  * Clear in-app disclosures
-  * App Store & Play Store privacy labels
-
-### ✅ Phase 6: Testing & Deployment
-
-* **Testing:**
-
-  * Unit tests (audio, inference, UI)
-  * Integration testing (end-to-end flow)
-  * Field testing (urban noise, rural areas)
-
-* **Deployment:**
-
-  * Phase 1: North America (300 species)
-  * Prepare app assets (icons, screenshots, descriptions)
-  * Submit to Google Play + App Store with required disclosures
-
-### ✅ Phase 7: Maintenance & Growth
-
-* **Feedback Loop:**
-
-  * In-app feedback, email support
-  * Prioritize common bug reports or feature requests
-
-* **Model Update Strategy:**
-
-  * Periodic retraining
-  * Trigger app update if model changes significantly
-  * Explore lightweight dynamic updates via cloud (if allowed)
-
-* **Future Ideas:**
-
-  * Bird photo recognition model
-  * Migration visualization overlay
-  * Social features or gamified sightings
+* Add user feedback loop
+* Patch and refine audio model
+* Introduce **image-based bird ID**
+* Evaluate need for server-backed sync, photo guides, or community features
 
 ---
 
-## 📄 Attributions
+## 🔐 Monetization & Future Services
 
-This project uses open-source datasets and model architectures, including:
+Feathra is intended to be usable as a free app without requiring accounts or subscriptions. That said, building and maintaining an app—even one that runs mostly locally—takes time and money. To support ongoing development, Feathra includes non-intrusive banner ads. I dislike disruptive ads just as much as you do, so I’ll be doing my best to keep them as minimal and respectful as ad platforms allow—no popups, no full screens, no noise.
 
-* **Xeno-canto** (Creative Commons licenses, [https://xeno-canto.org/](https://xeno-canto.org/))
-* **BirdCLEF 2024** (Terms of use via Kaggle competition)
-* **TweetyNet** (BSD 3-Clause, [https://github.com/yardencsGitHub/tweetynet](https://github.com/yardencsGitHub/tweetynet))
-* **MobileNetV3** (Apache 2.0, [https://github.com/xiaochus/MobileNetV3](https://github.com/xiaochus/MobileNetV3))
+If you enjoy the app and want to support its continued development, you’ll be able to remove ads through a small, optional in-app purchase. Think of it like buying me a cup of coffee once a month. Pricing is currently estimated at:
+- $6.99/month (billed monthly), or
+- $4.99/month (billed annually)
 
-See `NOTICE` for full license and attribution details.
+As the user base grows, Feathra may begin offering additional server-based features—only if there's enough interest to justify the cost. These could include:
+- Community features like emoji-based reactions on sightings
+- Gamified goals or streaks
+- Cloud-based log sharing and comparisons
+- Optional social feed limited to verified, model-validated photos or calls (to reduce moderation needs)
+
+Access to these future features would likely be offered through a minimal subscription, priced based on actual server and development costs. All paid tiers will automatically remove ads by default. Users will always have control over what they choose to share, and no image or audio will be uploaded unless the app is confident it’s a valid bird capture.
+
+---
+
+## 📝 Attributions
+
+Feathra uses open data and model architecture contributions from:
+
+* **Xeno-canto** — CC-licensed bird recordings ([xeno-canto.org](https://xeno-canto.org))
+* **BirdCLEF 2024** — Annotated bird sound dataset ([Kaggle](https://www.kaggle.com/competitions/birdclef-2024))
+* **TweetyNet** — Canary song model reference ([GitHub](https://github.com/yardencsGitHub/tweetynet))
+* **MobileNetV3** — Lightweight CNN backbone ([GitHub](https://github.com/xiaochus/MobileNetV3))
 
 ---
 
 ## 👤 Author
 
-Feathra is developed by George Jieh as a solo project.
+Created by **George Jieh**, combining machine learning, nature tech, and mobile design into a practical tool for birders and explorers of all levels.
+
+---
+
+## 💡 License
+
+Feathra is open source under the **Apache 2.0 License**.
