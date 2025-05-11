@@ -130,7 +130,7 @@ ios/Flutter/flutter_export_environment.sh
 
 # Android
 android/.gradle/
-android/local.properties
+**/local.properties
 android/gradlew
 android/gradlew.bat
 android/captures/
